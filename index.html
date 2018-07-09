@@ -45,8 +45,10 @@
           font-size: 18px;
         }
         #article-content .kyc-can_card ul li p {
-          font-size: 18px;
-          line-height: 30px;
+          /* font-size: 18px;
+          line-height: 30px; */
+          font-size: 14px;
+          line-height: 22.5px;
         }
       }
       @media (min-width:1200px) {
@@ -54,8 +56,10 @@
           font-size: 20px;
         }
         #article-content .kyc-can_card ul li p {
-          font-size: 20px;
-          line-height: 30px;
+          /* font-size: 18px;
+          line-height: 30px; */
+          font-size: 14px;
+          line-height: 22.5px;
         }
       }
       .kyc-container {
@@ -102,24 +106,37 @@
       }
       .kyc-can_card {
         width: 90%;
-        height: 300px;
+        height: 225px;
         overflow-x: hidden;
         box-sizing: border-box;
         display: inline-block;
         float: left;
         border: 0.5px solid;
       }
+      .kyc-question_wrap {
+        z-index: 1000;
+      }
+      .kyc-can_card.kyc-question_card {
+        height: 90px;
+        border: none;
+        background-color: lightgray;
+        margin-bottom: 15px;
+      }
       .kyc-can_scroll {
         width: 5%;
-        height: 300px;
+        height: 225px;
         box-sizing: border-box;
         background-color: lightgray;
         display: inline-block;
         float: left;
         cursor: pointer;
         z-index: 900;
-        line-height: 300px;
+        line-height: 225px;
         text-align: center;
+      }
+      .kyc-can_scroll.kyc-question_scroll {
+        height: 90px;
+        line-height: 90px;
       }
       .kyc-can_card ul, .kyc-header ul {
         list-style: none;
@@ -155,6 +172,16 @@
       }
       .kyc-dem, .kyc-dem .kyc-can_card {
         border-color: blue;
+      }
+      .kyc-rep .kyc-can_name::after {
+        content: ' (R)';
+        color: red;
+        opacity: 0.5;
+      }
+      .kyc-dem .kyc-can_name::after {
+        content: ' (D)';
+        color: blue;
+        opacity: 0.5;
       }
       .kyc-npa, .kyc-npa .kyc-can_card {
         border-color: gray;
@@ -228,6 +255,21 @@
         width: 100%;
         overflow-x: scroll;
       }
+      .kyc-can.DNR .kyc-can_scroll{
+        display: none;
+      }
+      .kyc-can.DNR .kyc-can_card {
+        height: auto;
+        border: none;
+      }
+      .kyc-can.DNR .kyc-can_card::after {
+        content: 'Candidate did not respond.';
+        color: gray;
+        text-decoration: italic;
+      }
+      .kyc-can.DNR .kyc-can_card *{
+        display: none;
+      }
       @media (min-width:576px) {
         .kyc-header-left {
           width: 15%;
@@ -282,477 +324,6 @@
             </div>
           </div>
         </div>
-          <!-- <div class="kyc-category step" data-category="Federal">
-            <div class="kyc-office">
-              <h1>U.S. Senator</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('http://spacecoastdaily.com/wp-content/uploads/2016/07/Rick-Scott-180-21.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Rick Scott</h3>
-                    <p class="kyc-can_description">Governor of Florida</p>
-                    <div class="kyc-can_card">
-                      <ul>
-                        <li>
-                          <p>The former health care executive and Florida's two-term governor announced his bid for Senate on April 9. See more coverage.</p>
-                        </li>
-                        <li>
-                          <p><b>Background</b></p>
-                          <p><i class="fas fa-home"></i> Born in Bloomington, Ill.; Lives in Tallahassee</p>
-                          <p><i class="fas fa-university"></i> B.A., University of Missouri, Kansas City; J.D., Southern Methodist University</p>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Roque de la Fuente</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <div class="kyc-can_card">
-                      <ul>
-                        <li>
-                          <p>The former health care executive and Florida's two-term governor announced his bid for Senate on April 9. See more coverage.</p>
-                        </li>
-                        <li>
-                          <p><b>Background</b></p>
-                          <p><i class="fas fa-home"></i> Born in Bloomington, Ill.; Lives in Tallahassee</p>
-                          <p><i class="fas fa-university"></i> B.A., University of Missouri, Kansas City; J.D., Southern Methodist University</p>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="kyc-party_break">
-
-              </div>
-              <div class="kyc-block kyc-party kyc-dem">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Bill Nelson</h3>
-                    <p class="kyc-can_description">Incumbent</p>
-                    <div class="kyc-can_card">
-                      <ul>
-                        <li>
-                          <p>The former health care executive and Florida's two-term governor announced his bid for Senate on April 9. See more coverage.</p>
-                        </li>
-                        <li>
-                          <p><b>Background</b></p>
-                          <p><i class="fas fa-home"></i> Born in Bloomington, Ill.; Lives in Tallahassee</p>
-                          <p><i class="fas fa-university"></i> B.A., University of Missouri, Kansas City; J.D., Southern Methodist University</p>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="kyc-category step" data-category="State">
-            <div class="kyc-office">
-              <h1>Governor</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Adam Putnam</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Ron DeSantis</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="kyc-party_break">
-
-              </div>
-              <div class="kyc-block kyc-party kyc-dem">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Gwen Graham</h3>
-                    <p class="kyc-can_description">her job</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Chris King</h3>
-                    <p class="kyc-can_description">his job</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Andrew Gillum</h3>
-                    <p class="kyc-can_description">Mayor of Tallahassee</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Philip Levine</h3>
-                    <p class="kyc-can_description">his job</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="kyc-category step" data-category="Local">
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="kyc-office">
-              <h1>State Senate District 10</h1>
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">John Legg</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="kyc-block kyc-party kyc-rep">
-                <div class="kyc-can">
-                  <div class="kyc-mug_wrap">
-                    <div class="kyc-mug" style="background-image:url('https://www.imaswmp.in/wp-content/uploads/default-avatar.jpg')">
-
-                    </div>
-                  </div>
-                  <div class="kyc-can_content">
-                    <h3 class="kyc-can_name">Wilton Simpson</h3>
-                    <p class="kyc-can_description">His job goes here</p>
-                    <p class="kyc-can_description">blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy. blah lsdjfalkj slakhbaoih IOEWHfoiilk xnlkhiuxhciuy8o2upjg oiey g89y9y g xyxy.</p>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div> -->
 
         <div class="kyc-progress">
 
@@ -892,30 +463,29 @@
         scroller
         .setup({
           step: '.step', // required - class name of trigger steps
-          // offset: 0,
+          offset: 0,
           progress: true,
           threshold: 1
           // ,debug: true
         })
-        .onStepEnter(handleStepEnter, 'x')
+        .onStepEnter(handleStepEnter)
         .onStepProgress(handleStepProgress)
         .onStepExit(handleStepExit);
 
-        function handleStepEnter(response, stry) {
-          $('.kyc-category_active').removeClass('kyc-category_active');
-          if ($('.kyc-ticker ul li').length) {
-            $('.kyc-ticker ul li').eq(response.index).addClass('kyc-category_active');
-          }
+        function handleStepEnter(response) {
+          $(response.element).css({
+            'position': '-webkit-sticky',
+            'position': 'sticky',
+            'top': 0
+          })
+
+          // console.log(response);
         }
         function handleStepProgress(response) {
-          number_of_steps = $('.kyc-category').length;
-          baseline_width = 100/number_of_steps;
-          current_width = baseline_width * response.progress;
-          bar_width = (response.index * baseline_width) + current_width;
-          $('.kyc-progress').css('width', bar_width+'%');
+
         }
         function handleStepExit(response) {
-          $('.kyc-category_active').removeClass('kyc-category_active');
+
         }
 
         $(window).trigger('resize');
@@ -973,7 +543,6 @@
           success: function(response) {
 
             response_data=response.feed.entry;
-            // console.log(response_data);
 
             for (var i = 0; i < response_data.length; i++) {
 
@@ -989,23 +558,9 @@
               data[candidate.gsx$officelevel.$t][candidate.gsx$officefull.$t][candidate.gsx$party.$t].push(candidate);
             }
 
-            // POPULATE CANDIDATE LIST
-
-            // console.log(data);
-
-            for (var key in data.Federal["U.S. Senator"].REP[1]) {
-              if (data.Federal["U.S. Senator"].REP[1].hasOwnProperty(key)) {
-                // console.log(key);
-                if (key.indexOf("issue-")) {
-                  // console.log(data.Federal["U.S. Senator"].REP[1][key].$t);
-                }
-
-              }
-            }
-
             for (var level in data) {
               var kyc_category = $('<div />', {
-                'class' : 'kyc-category step',
+                'class' : 'kyc-category',
                 'data-category' : level,
                 appendTo : $('.kyc-container')
               });
@@ -1025,97 +580,129 @@
 
 
                   for (var i = 0; i < data[level][office][party].length; i++) {
-                    var kyc_can = $('<div />', {
-                      'class': 'kyc-can',
-                      appendTo : kyc_party
-                    });
-                    var kyc_mug_wrap = $('<div />', {
-                      'class': 'kyc-mug_wrap',
-                      appendTo : kyc_can
-                    });
-                    var kyc_mug = $('<div />', {
-                      'class': 'kyc-mug',
-                      'style': 'background-image: url("'+data[level][office][party][i].gsx$mugurl.$t+'");',
-                      appendTo : kyc_mug_wrap
-                    });
-                    var kyc_can_content = $('<div />', {
-                      'class': 'kyc-can_content',
-                      appendTo : kyc_can
-                    });
-                    var kyc_can_name = $('<h3 />', {
-                      'class': 'kyc-can_name',
-                      text: data[level][office][party][i].gsx$namefirst.$t + ' ' + data[level][office][party][i].gsx$namelast.$t,
-                      appendTo : kyc_can_content
-                    });
-                    var kyc_can_description = $('<p />', {
-                      'class': 'kyc-can_description',
-                      text: data[level][office][party][i].gsx$title.$t,
-                      appendTo : kyc_can_content
-                    });
-                    var kyc_can_scrollLeft = $('<div />', {
-                      'class': 'kyc-can_scroll kyc-can_scrollLeft',
-                      text: '<',
-                      appendTo : kyc_can_content
-                    });
-                    var kyc_can_card = $('<div />', {
-                      'class': 'kyc-can_card',
-                      appendTo : kyc_can_content
-                    });
-                    var kyc_can_scrollRight = $('<div />', {
-                      'class': 'kyc-can_scroll kyc-can_scrollRight',
-                      text: '>',
-                      appendTo : kyc_can_content
-                    });
-                    var kyc_can_card_ul = $('<ul />', {
-                      appendTo : kyc_can_card
-                    });
-                    // var kyc_can_card_ul_li_guns = $('<li />', {
-                    //   appendTo : kyc_can_card_ul
-                    // });
-                    // var kyc_can_card_ul_li_guns_p = $('<p />', {
-                    //   text: data[level][office][party][i]['gsx$card-categoryguns'].$t,
-                    //   appendTo : kyc_can_card_ul_li_guns
-                    // });
-                    // var kyc_can_card_ul_li_taxes = $('<li />', {
-                    //   appendTo : kyc_can_card_ul
-                    // });
-                    // var kyc_can_card_ul_li_taxes_p = $('<p />', {
-                    //   text: data[level][office][party][i]['gsx$card-categorytaxes'].$t,
-                    //   appendTo : kyc_can_card_ul_li_taxes
-                    // });
-                    // var kyc_can_card_ul_li_third = $('<li />', {
-                    //   appendTo : kyc_can_card_ul
-                    // });
-                    // var kyc_can_card_ul_li_third_p = $('<p />', {
-                    //   text: data[level][office][party][i]['gsx$card-categorythird'].$t,
-                    //   appendTo : kyc_can_card_ul_li_third
-                    // });
 
-                    for (var question in data[level][office][party][i]) {
-                      console.log(question);
-                      console.log(question.indexOf('issue-'));
-                      if (data[level][office][party][i].hasOwnProperty(question)) {
-                        if (question.indexOf('issue-')>=0) {
-                          console.log('yes');
-                          var kyc_can_card_issueQ = $('<li />', {
-                            appendTo : kyc_can_card_ul
-                          });
-                          var kyc_can_card_issueQ_p = $('<p />', {
-                            text: data[level][office][party][i][question].$t,
-                            appendTo : kyc_can_card_issueQ
-                          });
+                    // TEST IF Q OR A
+                    if (data[level][office][party][i].gsx$party.$t!== 'KYC-QUESTION') {
+                      // THIS IS AN ANSWER CARD
+                      var kyc_can = $('<div />', {
+                        'class': 'kyc-can',
+                        appendTo : kyc_party
+                      });
+                      var kyc_mug_wrap = $('<div />', {
+                        'class': 'kyc-mug_wrap',
+                        appendTo : kyc_can
+                      });
+                      var kyc_mug = $('<div />', {
+                        'class': 'kyc-mug',
+                        'style': 'background-image: url("'+data[level][office][party][i].gsx$mugurl.$t+'");',
+                        appendTo : kyc_mug_wrap
+                      });
+                      var kyc_can_content = $('<div />', {
+                        'class': 'kyc-can_content',
+                        appendTo : kyc_can
+                      });
+                      var kyc_can_name = $('<h3 />', {
+                        'class': 'kyc-can_name',
+                        text: data[level][office][party][i].gsx$namefirst.$t + ' ' + data[level][office][party][i].gsx$namelast.$t,
+                        appendTo : kyc_can_content
+                      });
+                      var kyc_can_description = $('<p />', {
+                        'class': 'kyc-can_description',
+                        text: data[level][office][party][i].gsx$title.$t,
+                        appendTo : kyc_can_content
+                      });
+                      var kyc_can_scrollLeft = $('<div />', {
+                        'class': 'kyc-can_scroll kyc-can_scrollLeft',
+                        text: '<',
+                        appendTo : kyc_can_content
+                      });
+                      var kyc_can_card = $('<div />', {
+                        'class': 'kyc-can_card',
+                        appendTo : kyc_can_content
+                      });
+                      var kyc_can_scrollRight = $('<div />', {
+                        'class': 'kyc-can_scroll kyc-can_scrollRight',
+                        text: '>',
+                        appendTo : kyc_can_content
+                      });
+                      var kyc_can_card_ul = $('<ul />', {
+                        appendTo : kyc_can_card
+                      });
+
+                      var total_answers_length = 0;
+                      for (var question in data[level][office][party][i]) {
+                        if (data[level][office][party][i].hasOwnProperty(question)) {
+                          if (question.indexOf('issue-')>=0) {
+                            var kyc_can_card_issueQ = $('<li />', {
+                              appendTo : kyc_can_card_ul
+                            });
+                            var kyc_can_card_issueQ_p = $('<p />', {
+                              text: data[level][office][party][i][question].$t,
+                              appendTo : kyc_can_card_issueQ
+                            });
+
+                            total_answers_length += data[level][office][party][i][question].$t.length;
 
 
+                          }
                         }
                       }
+                      if (total_answers_length < 1) {
+                        // CANDIDATE DID NOT RESPOND
+                        kyc_can.addClass('DNR');
+                        // kyc_can_scrollLeft.hide();
+                        // kyc_can_scrollRight.hide();
+                        // kyc_can_card.html("<span class='dnr'>Candidate did not respond.</span>");
+                      }
+                    }
+                    else {
+                      // THIS IS A QUE CARD
+                      var kyc_question_wrap = $('<div />', {
+                        'class': 'kyc-question_wrap step',
+                        appendTo : kyc_office
+                      })
+                      var kyc_can_scrollLeft = $('<div />', {
+                        'class': 'kyc-can_scroll kyc-can_scrollLeft kyc-question_scroll',
+                        text: '<',
+                        appendTo : kyc_question_wrap
+                      });
+                      var kyc_can_card = $('<div />', {
+                        'class': 'kyc-can_card kyc-question_card',
+                        appendTo : kyc_question_wrap
+                      });
+                      var kyc_can_scrollRight = $('<div />', {
+                        'class': 'kyc-can_scroll kyc-can_scrollRight kyc-question_scroll',
+                        text: '>',
+                        appendTo : kyc_question_wrap
+                      });
+
+                      var kyc_can_card_ul = $('<ul />', {
+                        appendTo : kyc_can_card
+                      });
+
+                      for (var question in data[level][office][party][i]) {
+                        if (data[level][office][party][i].hasOwnProperty(question)) {
+                          if (question.indexOf('issue-')>=0) {
+                            var kyc_can_card_issueQ = $('<li />', {
+                              appendTo : kyc_can_card_ul
+                            });
+                            var kyc_can_card_issueQ_p = $('<p />', {
+                              text: data[level][office][party][i][question].$t,
+                              appendTo : kyc_can_card_issueQ
+                            });
+
+                          }
+                        }
+                      }
+
                     }
 
                   }
                 }
               }
               scroller.resize();
-              console.log('just resized');
               }
+            console.log($('.step'));
             scrollama_init();
           }
         })
@@ -1140,7 +727,44 @@
 
       });
 
+      function scrollList(scroll_element) {
+        question_card = scroll_element;
+        questions_positions = [];
+        // DETERMINE WHERE THE LIs ARE POSITIONED
+        question_card.find('ul > li').each(function() {
+          questions_positions.push($(this).position().left);
+        })
+        questions_index = 0;
+        // GET CURRENT PARENT DIV SCROLLEFT VALUE
+        for (var i = 0; i < questions_positions.length; i++) {
+          if (question_card.scrollLeft() >= questions_positions[i]-questions_positions[0]) {
+            questions_index = i;
+          }
+        }
+        console.log(question_card.scrollLeft());
+        console.log(questions_positions);
+        // SCROLL PARENT DIV TO CORRESPONDING CHILD LI
+        console.log('amount to scroll '+ (questions_positions[questions_index+1]-questions_positions[0]));
+        question_card.animate({
+          scrollLeft: questions_positions[questions_index+1]-questions_positions[0]
+        }, 500);
+      }
+
+
+      // FOR TUESDAY, SIMPLIFY ALL THIS. THE OFFSET POSITIONS **CHANGE** SO DON'T TRY TO GUESS THE INDEX OF THE QUE. JUST ADD A RELATIVE SCROLL WITH THE SAME WIDTH EACH TIME (DIFFERENCE BETWEEN 1ST AND 0TH)
+
+
+
       $('body').on('click','.kyc-can_scrollRight', function() {
+        // question_card =
+        scrollList($(this).parents('.kyc-office').find('.kyc-question_card'));
+
+        question_card.parents('.kyc-office').find('.kyc-can_card:not(.kyc-question_card) > ul').each(function() {
+
+        })
+        // $(this).parents('.kyc-office').each(function() {
+        //   console.log('hi');
+        // });
         // console.log($($('.kyc-can_card li')[0])[0].offsetWidth);
         // console.log($($('.kyc-can_card li')[0])[0].clientWidth);
         // console.log($($('.kyc-can_card li')[1])[0].offsetWidth);
@@ -1150,12 +774,12 @@
         // console.log($($('.kyc-can_card')[1])[0].offsetWidth);
         // console.log($($('.kyc-can_card')[1])[0].clientWidth);
         // scroll_value = $($('.kyc-can_card li')[0])[0].offsetWidth;
-        scroll_value = $($('.kyc-can_card')[0])[0].offsetWidth;
-        scroll_baseline = $('.kyc-can_card').scrollLeft();
-        scroll_value += scroll_baseline;
-        $('.kyc-can_card').animate({
-          scrollLeft: scroll_value
-        }, 500);
+        // scroll_value = $($('.kyc-can_card')[0])[0].offsetWidth;
+        // scroll_baseline = $('.kyc-can_card').scrollLeft();
+        // scroll_value += scroll_baseline;
+        // $('.kyc-can_card').animate({
+        //   scrollLeft: scroll_value
+        // }, 500);
 
       });
       $('body').on('click','.kyc-can_scrollLeft', function() {
