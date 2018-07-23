@@ -5,7 +5,10 @@
     <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjiu-96EDVJ8T0Qpv8iayY028Sm7fO02g&libraries=places"></script>
     <style media="screen">
       /* STANDARD CSS */
       #article-content {
@@ -15,9 +18,15 @@
       }
       #article-content h1 {
         font-family: "Muli", "Arial";
-        font-size: 42px;
-        line-height: 1.2;
+        font-size: 20px;
+        line-height: 30px;
         font-weight: 900;
+        padding: 7.5px;
+        letter-spacing: 1px;
+        background-color: darkgray;
+        color: white;
+        margin: 120px 0 0;
+        text-transform: uppercase;
       }
       #article-content h2 {
         font-family: "Muli", "Arial";
@@ -26,7 +35,7 @@
       }
       #article-content h3 {
         font-family: "Muli", "Arial";
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 900;
         margin: 0;
         line-height: 30px;
@@ -37,8 +46,11 @@
       }
       #article-content .kyc-can_card ul li p {
         font-size: 14px;
-        line-height: 22.5px;
+        line-height: 18.75px;
         margin-top: 0;
+        margin-bottom: 0;
+        font-family: Muli, Arial;
+        white-space: pre-line;
       }
       @media (min-width:480px) {
         #article-content p {
@@ -62,8 +74,14 @@
           line-height: 22.5px;
         }
       }
+      .kyc-header-content {
+        width: 100%;
+      }
       .kyc-container {
         margin-bottom: 120px;
+      }
+      .scroll .step {
+        /* min-height: 100px; */
       }
       .kyc-ticker {
         height: 60px;
@@ -74,7 +92,7 @@
         bottom: 0;
         background-color: #fafafa;
         font-family: 'Muli';
-        z-index: 100;
+        z-index: 1100;
       }
       .kyc-progress {
         position: fixed;
@@ -107,25 +125,46 @@
       .kyc-can_card {
         width: 90%;
         height: 225px;
-        overflow-x: hidden;
+        overflow: hidden;
         box-sizing: border-box;
         display: inline-block;
         float: left;
         border: 0.5px solid;
       }
+      .kyc-can_card li {
+        height: 100%;
+        overflow-y: scroll;
+      }
       .kyc-question_wrap {
         z-index: 1000;
+        background-color: #fafafa;
+        /* padding-bottom: 5px; */
+        /* height:90px; */
       }
       .kyc-can_card.kyc-question_card {
-        height: 90px;
+        height: 105px;
         border: none;
-        background-color: lightgray;
+        background-color: #fafafa;
+        border-bottom: thick solid lightgray;
         margin-bottom: 15px;
+      }
+      .kyc-can_card.kyc-question_card ul li {
+        padding: 5px 15px;
+      }
+      .kyc-question_card p {
+        font-family: Muli, Arial;
+        font-style: italic;
+      }
+      .kyc-question_card p::before {
+        content: 'QUESTION: ';
+        font-weight: 900;
+        /* display: block; */
       }
       .kyc-can_scroll {
         width: 5%;
         height: 225px;
         box-sizing: border-box;
+        /* border-bottom: thick solid lightgray; */
         background-color: lightgray;
         display: inline-block;
         float: left;
@@ -135,8 +174,12 @@
         text-align: center;
       }
       .kyc-can_scroll.kyc-question_scroll {
-        height: 90px;
-        line-height: 90px;
+        height: 105px;
+        line-height: 105px;
+      }
+      .kyc-can_scroll:hover {
+        background-color: darkgray;
+        color: white;
       }
       .kyc-can_card ul, .kyc-header ul {
         list-style: none;
@@ -160,27 +203,28 @@
     </style>
     <style media="screen">
       .kyc-block {
-        border-width: 0 0 0 5px;
+        border:none;
+        /* border-width: 0 0 0 5px;
         padding-left: 15px;
-        border-style: solid;
+        border-style: solid; */
       }
       .kyc-can_list {
         border-color: gray;
       }
       .kyc-rep, .kyc-rep .kyc-can_card {
-        border-color: red;
+        border-color: #D65858;
       }
       .kyc-dem, .kyc-dem .kyc-can_card {
-        border-color: blue;
+        border-color: #3378A3;
       }
       .kyc-rep .kyc-can_name::after {
         content: ' (R)';
-        color: red;
+        color: #D65858;
         opacity: 0.5;
       }
       .kyc-dem .kyc-can_name::after {
         content: ' (D)';
-        color: blue;
+        color: #3378A3;
         opacity: 0.5;
       }
       .kyc-npa, .kyc-npa .kyc-can_card {
@@ -193,13 +237,16 @@
       }
       .kyc-office h1 {
         margin-top: 0;
-        padding-top: 30px;
+        padding-top: 105px;
       }
+      /* .kyc-office:first-of-type {
+        margin-bottom: 400px;
+      } */
       .kyc-mug_wrap {
         box-sizing: border-box;
         display: block;
         float: left;
-        width: 15%;
+        width: 10%;
         height: 90px;
         /* margin-right: 15px; */
       }
@@ -221,10 +268,10 @@
         border-radius: 50%;
       }
       .kyc-rep .kyc-mug::after{
-        background-color: red;
+        background-color: #D65858;
       }
       .kyc-dem .kyc-mug::after{
-        background-color: blue;
+        background-color: #3378A3;
       }
       .kyc-npa .kyc-mug::after{
         background-color: gray;
@@ -233,7 +280,7 @@
         box-sizing: border-box;
         display: block;
         float: left;
-        width: 85%;
+        width: 90%;
         padding-left: 15px;
       }
       .kyc-party_break {
@@ -251,10 +298,10 @@
       .kyc-header-left {
         width: 100%;
       }
-      .kyc-header-right {
+      /* .kyc-header-right {
         width: 100%;
         overflow-x: scroll;
-      }
+      } */
       .kyc-can.DNR .kyc-can_scroll{
         display: none;
       }
@@ -286,44 +333,43 @@
   <body style = "background-color: #fafafa;">
     <div id="article-content">
 
-      <h1>Voter guide</h1>
+      <h1>Know your candidates</h1>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus mollis tristique. Sed vehicula tellus at consectetur tristique.</p>
       <p>Ut non orci suscipit, facilisis leo sed, sollicitudin augue. Nunc nec dolor magna. Morbi laoreet urna eget mi tempus, ac porta nunc luctus.</p>
       <p>Pellentesque molestie vitae eros fringilla suscipit. Mauris sollicitudin, libero nec feugiat viverra, tellus turpis malesuada orci, ac varius elit ligula eu nibh.</p>
-      <p>Nulla dolor ex, pulvinar et magna non, consequat euismod diam.</p>
+      <!-- <p>Nulla dolor ex, pulvinar et magna non, consequat euismod diam.</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec dapibus mollis tristique. Sed vehicula tellus at consectetur tristique.</p>
       <p>Ut non orci suscipit, facilisis leo sed, sollicitudin augue. Nunc nec dolor magna. Morbi laoreet urna eget mi tempus, ac porta nunc luctus.</p>
       <p>Pellentesque molestie vitae eros fringilla suscipit. Mauris sollicitudin, libero nec feugiat viverra, tellus turpis malesuada orci, ac varius elit ligula eu nibh.</p>
-      <p>Nulla dolor ex, pulvinar et magna non, consequat euismod diam.</p>
+      <p>Nulla dolor ex, pulvinar et magna non, consequat euismod diam.</p> -->
 
-      <div class="kyc-container">
+      <div class="kyc-container scroll">
         <div class="kyc-header">
           <div class="kyc-header-content">
+            Show only races for my address:
+            <input id="kyc-input_place" type="text" size="50"/>
+            <button id="kyc-search">Filter candidates</button> <br />
             <div class="kyc-header-left">
               Filter by party:
               <select class="kyc-form-select" name="kyc-party-select">
                 <option value="all">All</option>
-                <option value="rep">Republican</option>
                 <option value="dem">Democrat</option>
+                <option value="rep">Republican</option>
               </select>
             </div>
             <div class="kyc-header-right">
-
-              <!-- <ul>
-                <li>
-                  Do you support or oppose further normalizing relations with Cuba in areas such as trade, travel and opening a Cuban consulate in Tampa Bay? Please explain.
-                </li>
-                <li>
-                  Do you support or oppose changing the ban on offshore drilling near Florida? Please explain.
-                </li>
-                <li>
-                  Do you support or oppose closing the gun-show loophole on background checks, banning assault weapons or restricting the capacity of magazines? Please explain.
-                </li>
-              </ul> -->
-
+            </div>
+            <div class="kyc-index" style="width:100%;">
+              <select class="kyc-dropdown" name="kyc-dropdown">
+                <option class="kyc-jumpto" value="jumpto" disabled selected>Jump to race...</option>
+                <!-- <option value="all">All</option>
+                <option value="dem">Democrat</option>
+                <option value="rep">Republican</option> -->
+              </select>
             </div>
           </div>
         </div>
+        <br />
 
         <div class="kyc-progress">
 
@@ -463,9 +509,10 @@
         scroller
         .setup({
           step: '.step', // required - class name of trigger steps
+          container: '.scroll',
           offset: 0,
-          progress: true,
-          threshold: 1
+          progress: false,
+          threshold: 4
           // ,debug: true
         })
         .onStepEnter(handleStepEnter)
@@ -473,10 +520,14 @@
         .onStepExit(handleStepExit);
 
         function handleStepEnter(response) {
+          $('.step').css({
+            'position': 'relative',
+            'top': -1
+          });
           $(response.element).css({
             'position': '-webkit-sticky',
             'position': 'sticky',
-            'top': 0
+            'top': -1
           })
 
           // console.log(response);
@@ -522,6 +573,34 @@
         return object.level === 'State'
       }
 
+      function build_dropdown(name, data) {
+        var dropdown_category = $('<optgroup />', {
+          'text' : name,
+          'label' : name,
+          // 'disabled': true,
+          appendTo : $('.kyc-dropdown')
+        });
+        for (var race in data) {
+          if (data.hasOwnProperty(race)) {
+
+            var dropdown_entry = $('<option />', {
+              'text' : race,
+              'value' : race,
+              // 'disabled': true,
+              appendTo : dropdown_category
+            });
+            for (var party in data[race]) {
+              if (data[race].hasOwnProperty(party)) {
+                // console.log(party);
+                dropdown_entry.addClass(party);
+              }
+            }
+
+          }
+        }
+
+      }
+
       // instantiate the scrollama
       const scroller = scrollama();
 
@@ -558,7 +637,11 @@
               data[candidate.gsx$officelevel.$t][candidate.gsx$officefull.$t][candidate.gsx$party.$t].push(candidate);
             }
 
+
             for (var level in data) {
+
+              build_dropdown(level, data[level])
+
               var kyc_category = $('<div />', {
                 'class' : 'kyc-category',
                 'data-category' : level,
@@ -568,6 +651,7 @@
               for (var office in data[level]) {
                 var kyc_office = $('<div />', {
                   'class' : 'kyc-office',
+                  'data-office' : office,
                   html : '<h1>'+office+'</h1>',
                   appendTo : kyc_category
                 });
@@ -613,7 +697,7 @@
                       });
                       var kyc_can_scrollLeft = $('<div />', {
                         'class': 'kyc-can_scroll kyc-can_scrollLeft',
-                        text: '<',
+                        html: '<i class="fas fa-arrow-left"></i>',
                         appendTo : kyc_can_content
                       });
                       var kyc_can_card = $('<div />', {
@@ -622,7 +706,7 @@
                       });
                       var kyc_can_scrollRight = $('<div />', {
                         'class': 'kyc-can_scroll kyc-can_scrollRight',
-                        text: '>',
+                        html: '<i class="fas fa-arrow-right"></i>',
                         appendTo : kyc_can_content
                       });
                       var kyc_can_card_ul = $('<ul />', {
@@ -633,13 +717,15 @@
                       for (var question in data[level][office][party][i]) {
                         if (data[level][office][party][i].hasOwnProperty(question)) {
                           if (question.indexOf('issue-')>=0) {
-                            var kyc_can_card_issueQ = $('<li />', {
-                              appendTo : kyc_can_card_ul
-                            });
-                            var kyc_can_card_issueQ_p = $('<p />', {
-                              text: data[level][office][party][i][question].$t,
-                              appendTo : kyc_can_card_issueQ
-                            });
+                            if (data[level][office][party][i][question].$t.length>0) {
+                              var kyc_can_card_issueQ = $('<li />', {
+                                appendTo : kyc_can_card_ul
+                              });
+                              var kyc_can_card_issueQ_p = $('<p />', {
+                                text: data[level][office][party][i][question].$t,
+                                appendTo : kyc_can_card_issueQ
+                              });
+                            }
 
                             total_answers_length += data[level][office][party][i][question].$t.length;
 
@@ -663,7 +749,7 @@
                       })
                       var kyc_can_scrollLeft = $('<div />', {
                         'class': 'kyc-can_scroll kyc-can_scrollLeft kyc-question_scroll',
-                        text: '<',
+                        html: '<i class="fas fa-arrow-left"></i>',
                         appendTo : kyc_question_wrap
                       });
                       var kyc_can_card = $('<div />', {
@@ -672,7 +758,7 @@
                       });
                       var kyc_can_scrollRight = $('<div />', {
                         'class': 'kyc-can_scroll kyc-can_scrollRight kyc-question_scroll',
-                        text: '>',
+                        html: '<i class="fas fa-arrow-right"></i>',
                         appendTo : kyc_question_wrap
                       });
 
@@ -683,14 +769,15 @@
                       for (var question in data[level][office][party][i]) {
                         if (data[level][office][party][i].hasOwnProperty(question)) {
                           if (question.indexOf('issue-')>=0) {
-                            var kyc_can_card_issueQ = $('<li />', {
-                              appendTo : kyc_can_card_ul
-                            });
-                            var kyc_can_card_issueQ_p = $('<p />', {
-                              text: data[level][office][party][i][question].$t,
-                              appendTo : kyc_can_card_issueQ
-                            });
-
+                            if (data[level][office][party][i][question].$t.length>0) {
+                              var kyc_can_card_issueQ = $('<li />', {
+                                appendTo : kyc_can_card_ul
+                              });
+                              var kyc_can_card_issueQ_p = $('<p />', {
+                                text: data[level][office][party][i][question].$t,
+                                appendTo : kyc_can_card_issueQ
+                              });
+                            }
                           }
                         }
                       }
@@ -727,69 +814,32 @@
 
       });
 
-      function scrollList(scroll_element) {
+      function scrollList(scroll_element, multiplier) {
         question_card = scroll_element;
         questions_positions = [];
         // DETERMINE WHERE THE LIs ARE POSITIONED
         question_card.find('ul > li').each(function() {
           questions_positions.push($(this).position().left);
         })
-        questions_index = 0;
-        // GET CURRENT PARENT DIV SCROLLEFT VALUE
-        for (var i = 0; i < questions_positions.length; i++) {
-          if (question_card.scrollLeft() >= questions_positions[i]-questions_positions[0]) {
-            questions_index = i;
-          }
-        }
-        console.log(question_card.scrollLeft());
-        console.log(questions_positions);
-        // SCROLL PARENT DIV TO CORRESPONDING CHILD LI
-        console.log('amount to scroll '+ (questions_positions[questions_index+1]-questions_positions[0]));
+        questions_width = questions_positions[1]-questions_positions[0];
+
+        // SCROLL PARENT DIV TO NEXT QUE LI
+        scroll_value = question_card.scrollLeft() + (questions_width * multiplier);
         question_card.animate({
-          scrollLeft: questions_positions[questions_index+1]-questions_positions[0]
-        }, 500);
-      }
-
-
-      // FOR TUESDAY, SIMPLIFY ALL THIS. THE OFFSET POSITIONS **CHANGE** SO DON'T TRY TO GUESS THE INDEX OF THE QUE. JUST ADD A RELATIVE SCROLL WITH THE SAME WIDTH EACH TIME (DIFFERENCE BETWEEN 1ST AND 0TH)
-
-
-
-      $('body').on('click','.kyc-can_scrollRight', function() {
-        // question_card =
-        scrollList($(this).parents('.kyc-office').find('.kyc-question_card'));
-
-        question_card.parents('.kyc-office').find('.kyc-can_card:not(.kyc-question_card) > ul').each(function() {
-
-        })
-        // $(this).parents('.kyc-office').each(function() {
-        //   console.log('hi');
-        // });
-        // console.log($($('.kyc-can_card li')[0])[0].offsetWidth);
-        // console.log($($('.kyc-can_card li')[0])[0].clientWidth);
-        // console.log($($('.kyc-can_card li')[1])[0].offsetWidth);
-        // console.log($($('.kyc-can_card li')[1])[0].clientWidth);
-        // console.log($($('.kyc-can_card')[0])[0].offsetWidth);
-        // console.log($($('.kyc-can_card')[0])[0].clientWidth);
-        // console.log($($('.kyc-can_card')[1])[0].offsetWidth);
-        // console.log($($('.kyc-can_card')[1])[0].clientWidth);
-        // scroll_value = $($('.kyc-can_card li')[0])[0].offsetWidth;
-        // scroll_value = $($('.kyc-can_card')[0])[0].offsetWidth;
-        // scroll_baseline = $('.kyc-can_card').scrollLeft();
-        // scroll_value += scroll_baseline;
-        // $('.kyc-can_card').animate({
-        //   scrollLeft: scroll_value
-        // }, 500);
-
-      });
-      $('body').on('click','.kyc-can_scrollLeft', function() {
-        scroll_value = $($('.kyc-can_card')[0])[0].offsetWidth;
-        scroll_baseline = $('.kyc-can_card').scrollLeft();
-        scroll_value = scroll_baseline - scroll_value
-        $('.kyc-can_card').animate({
           scrollLeft: scroll_value
         }, 500);
-        // $('.kyc-can_card').scrollLeft(scroll_value)
+      }
+      $('body').on('click','.kyc-can_scrollRight', function() {
+        scrollList($(this).parents('.kyc-office').find('.kyc-question_card'), 1);
+        question_card.parents('.kyc-office').find('.kyc-can_card:not(.kyc-question_card)').each(function() {
+          scrollList($(this), 1);
+        });
+      });
+      $('body').on('click','.kyc-can_scrollLeft', function() {
+        scrollList($(this).parents('.kyc-office').find('.kyc-question_card'), -1);
+        question_card.parents('.kyc-office').find('.kyc-can_card:not(.kyc-question_card)').each(function() {
+          scrollList($(this), -1);
+        });
       });
 
       // FILTER BY PARTY
@@ -798,14 +848,51 @@
         FILTER_BY.party = $(this).val();
 
         $('.kyc-block').show();
+        $('.kyc-dropdown').find('option:not(.kyc-jumpto)').each(function() {
+          this.disabled = false;
+        });
         if (FILTER_BY.party!=='all') {
-          $('.kyc-block:not(.kyc-'+FILTER_BY.party+')').fadeOut('slow');
+          $('.kyc-block:not(.kyc-npa):not(.kyc-'+FILTER_BY.party+')').fadeOut('slow');
+          $('.kyc-dropdown').find('option:not(.NPA):not(.'+FILTER_BY.party.toUpperCase()+')').each(function() {
+            this.disabled = true;
+          });
+
         }
         if (scroller) {
           scroller.resize();
         }
       });
+      // JUMP TO RACE ON SELECT CHANGE
+      $('.kyc-dropdown').change(function() {
+        JUMP_TO = $(this).val();
+        $([document.documentElement, document.body]).animate({
+          scrollTop: $('[data-office="'+JUMP_TO+'"]').offset().top
+        }, 1000);
+      })
 
+    </script>
+
+    <script type="text/javascript">
+      function initialize() {
+        var input = document.getElementById('kyc-input_place');
+        new google.maps.places.Autocomplete(input);
+        console.log('initialized');
+
+        $('#kyc-search').click(function() {
+          var address = $('#kyc-input_place')[0].value;
+          $.get('https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBjiu-96EDVJ8T0Qpv8iayY028Sm7fO02g&address='+address, function(response) {
+            console.log(response.divisions);
+            for (var division in response.divisions) {
+              if (response.divisions.hasOwnProperty(division)) {
+                console.log(response.divisions[division].name);
+              }
+            }
+          });
+
+        });
+      }
+
+      google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
 
