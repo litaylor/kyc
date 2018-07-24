@@ -74,9 +74,7 @@
           line-height: 22.5px;
         }
       }
-      .kyc-header-content {
-        width: 100%;
-      }
+
       .kyc-container {
         margin-bottom: 120px;
       }
@@ -288,20 +286,14 @@
       }
       .kyc-header {
         width: 100%;
-        padding-left: 20px;
+        /* padding-left: 20px; */
       }
-      .kyc-header div {
-        box-sizing: border-box;
-        display: inline-block;
-        float: left;
+      .kyc-header-content {
+        max-width: 300px;
+        position: inline-block;
+        margin: 0 auto;
       }
-      .kyc-header-left {
-        width: 100%;
-      }
-      /* .kyc-header-right {
-        width: 100%;
-        overflow-x: scroll;
-      } */
+
       .kyc-can.DNR .kyc-can_scroll{
         display: none;
       }
@@ -316,6 +308,26 @@
       }
       .kyc-can.DNR .kyc-can_card *{
         display: none;
+      }
+      .kyc-form-icon {
+        width: 10%;
+        cursor: pointer;
+        text-align: center;
+        box-sizing: border-box;
+        display: inline;
+        float:left;
+      }
+      #kyc-input_place  {
+        width: 80%;
+        box-sizing: border-box;
+        display: inline;
+        float:left;
+        /* text-align: center; */
+      }
+      .kyc-dropdown, .kyc-form-select {
+        width: 80%;
+        box-sizing: border-box;
+        margin: 0 10%;
       }
       @media (min-width:576px) {
         .kyc-header-left {
@@ -347,24 +359,30 @@
         <div class="kyc-header">
           <div class="kyc-header-content">
             Show only races for my address:
-            <input id="kyc-input_place" type="text" size="50"/>
-            <button id="kyc-search">Filter candidates</button> <br />
-            <div class="kyc-header-left">
-              Filter by party:
-              <select class="kyc-form-select" name="kyc-party-select">
-                <option value="all">All</option>
-                <option value="dem">Democrat</option>
-                <option value="rep">Republican</option>
-              </select>
-            </div>
-            <div class="kyc-header-right">
-            </div>
+            <br/>
+            <br />
+            <div class = "kyc-form-icon kyc-cancel kyc-address-icon"><i class="fas fa-times"></i></div>
+            <input id="kyc-input_place" type="text"/>
+            <div id="kyc-search" class = "kyc-form-icon kyc-search-button kyc-address-icon"><i class="fas fa-search"></i></div>
+            <br />
+            <br />
+            Show only races in my party:
+            <br/>
+            <br />
+            <select class="kyc-form-select" name="kyc-party-select">
+              <option value="all">All</option>
+              <option value="dem">Democrat</option>
+              <option value="rep">Republican</option>
+            </select>
+            <!-- <button>Filter candidates</button> -->
+            <br />
+            <br />
+            <br />
+            <br />
+
             <div class="kyc-index" style="width:100%;">
               <select class="kyc-dropdown" name="kyc-dropdown">
                 <option class="kyc-jumpto" value="jumpto" disabled selected>Jump to race...</option>
-                <!-- <option value="all">All</option>
-                <option value="dem">Democrat</option>
-                <option value="rep">Republican</option> -->
               </select>
             </div>
           </div>
@@ -582,10 +600,10 @@
         });
         for (var race in data) {
           if (data.hasOwnProperty(race)) {
-
             var dropdown_entry = $('<option />', {
               'text' : race,
               'value' : race,
+              'class': 'kyc-option-'+data[race]['KYC-QUESTION'][0].gsx$googledivision.$t.replace(/:/g,'_').replace(/\//g,'_'),
               // 'disabled': true,
               appendTo : dropdown_category
             });
@@ -669,7 +687,7 @@
                     if (data[level][office][party][i].gsx$party.$t!== 'KYC-QUESTION') {
                       // THIS IS AN ANSWER CARD
                       var kyc_can = $('<div />', {
-                        'class': 'kyc-can',
+                        'class': 'kyc-can kyc-div_'+data[level][office][party][i].gsx$googledivision.$t.replace(/:/g,'_').replace(/\//g,'_'),
                         appendTo : kyc_party
                       });
                       var kyc_mug_wrap = $('<div />', {
@@ -736,9 +754,6 @@
                       if (total_answers_length < 1) {
                         // CANDIDATE DID NOT RESPOND
                         kyc_can.addClass('DNR');
-                        // kyc_can_scrollLeft.hide();
-                        // kyc_can_scrollRight.hide();
-                        // kyc_can_card.html("<span class='dnr'>Candidate did not respond.</span>");
                       }
                     }
                     else {
@@ -782,6 +797,10 @@
                         }
                       }
 
+
+                      $('.kyc-dem').parents('.kyc-office').addClass('kyc-office-dem');
+                      $('.kyc-rep').parents('.kyc-office').addClass('kyc-office-rep');
+                      $('.kyc-npa').parents('.kyc-office').addClass('kyc-office-npa');
                     }
 
                   }
@@ -847,12 +866,24 @@
 
         FILTER_BY.party = $(this).val();
 
-        $('.kyc-block').show();
+        $('.kyc-no-hide-party-child:not(.kyc-no-hide-address-child)').parents('.kyc-office').removeClass('kyc-no-hide');
+        $('.kyc-no-hide-party-child').removeClass('kyc-no-hide-party-child');
+        $('.kyc-office:not(.kyc-no-hide)').show();
+        $('.kyc-block').show()
+
         $('.kyc-dropdown').find('option:not(.kyc-jumpto)').each(function() {
           this.disabled = false;
         });
+
         if (FILTER_BY.party!=='all') {
-          $('.kyc-block:not(.kyc-npa):not(.kyc-'+FILTER_BY.party+')').fadeOut('slow');
+
+          $('.kyc-'+FILTER_BY.party).addClass('kyc-no-hide-party-child');
+          $('.kyc-npa').addClass('kyc-no-hide-party-child');
+          $('.kyc-no-hide-party-child').parents('.kyc-office').addClass('kyc-no-hide');
+          $('.kyc-no-hide-party-child').show()
+          hide_offices();
+          $('.kyc-block:not(.kyc-no-hide-party-child)').fadeOut('slow');
+
           $('.kyc-dropdown').find('option:not(.NPA):not(.'+FILTER_BY.party.toUpperCase()+')').each(function() {
             this.disabled = true;
           });
@@ -873,6 +904,14 @@
     </script>
 
     <script type="text/javascript">
+      function show_all_offices() {
+
+      }
+      function hide_offices() {
+        $('.kyc-no-hide-address-child').parents('.kyc-office').addClass('kyc-no-hide');
+        $('.kyc-no-hide-party-child').parents('.kyc-office').addClass('kyc-no-hide');
+        $('.kyc-office:not(.kyc-no-hide)').fadeOut('slow');
+      }
       function initialize() {
         var input = document.getElementById('kyc-input_place');
         new google.maps.places.Autocomplete(input);
@@ -882,11 +921,18 @@
           var address = $('#kyc-input_place')[0].value;
           $.get('https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBjiu-96EDVJ8T0Qpv8iayY028Sm7fO02g&address='+address, function(response) {
             console.log(response.divisions);
+            $('.kyc-can').removeClass('kyc-no-hide');
             for (var division in response.divisions) {
               if (response.divisions.hasOwnProperty(division)) {
-                console.log(response.divisions[division].name);
+                division_slug = division.replace(/:/g,'_').replace(/\//g,'_');
+                $('.kyc-div_'+division_slug).addClass('kyc-no-hide-address-child');
+                $('.kyc-option-'+division_slug).addClass('kyc-option-address-enabled');
               }
             }
+            hide_offices();
+            $('.kyc-dropdown option:not(.kyc-option-address-enabled)').each(function() {
+              this.disabled = true;
+            })
           });
 
         });

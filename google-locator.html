@@ -8,17 +8,17 @@
 
   </head>
   <body>
-      <input id="input_place" type="text" size="50"/>
-      <button id="search">Show my candidates</button>
+      <input id="kyc-input_place" type="text" size="50"/>
+      <button id="kyc-search">Show my candidates</button>
 
     <script type="text/javascript">
       function initialize() {
-        var input = document.getElementById('input_place');
+        var input = document.getElementById('kyc-input_place');
         new google.maps.places.Autocomplete(input);
         console.log('initialized');
 
-        $('#search').click(function() {
-          var address = $('#input_place')[0].value;
+        $('#kyc-search').click(function() {
+          var address = $('#kyc-input_place')[0].value;
           $.get('https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBjiu-96EDVJ8T0Qpv8iayY028Sm7fO02g&address='+address, function(response) {
             console.log(response);
           });
