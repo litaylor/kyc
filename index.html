@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjiu-96EDVJ8T0Qpv8iayY028Sm7fO02g&libraries=places"></script>
     <style media="screen">
       /* STANDARD CSS */
@@ -338,9 +337,42 @@
           padding-left: 15px;
         }
       }
+      .kyc-cancel {
+        color: lightgray;
+      }
+      .kyc-cancel.active {
+        color: #D65858;
+      }
+      .kyc-status_message {
+        font-style: italic;
+        line-height: 30px;
+        font-size: 15px;
+        text-align: center;
+      }
+      .kyc-status_party_DEM {
+        display: none;
+        background-color: #3378A3;
+        color: white;
+        padding: 2.5px 5px;
+        margin: 0 2.5px;
+      }
+      .kyc-status_party_REP {
+        display: none;
+        background-color: #D65858;
+        color: white;
+        padding: 2.5px 5px;
+        margin: 0 2.5px;
+      }
+      .kyc-status_ballot {
+        display: none;
+        background-color: darkgray;
+        color: white;
+        padding: 2.5px 5px;
+        margin: 0 2.5px;
+      }
 
     </style>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous"> -->
   </head>
   <body style = "background-color: #fafafa;">
     <div id="article-content">
@@ -374,12 +406,23 @@
               <option value="dem">Democrat</option>
               <option value="rep">Republican</option>
             </select>
-            <!-- <button>Filter candidates</button> -->
             <br />
             <br />
             <br />
             <br />
 
+            <div class="kyc-status_message">
+              Showing all<br />
+              <span class="kyc-status_party kyc-status_party_DEM">Democratic</span> <span class="kyc-status_party kyc-status_party_REP">Republican</span> candidates<br />
+              <span class ="kyc-status_ballot"> on my ballot</span>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            Jump to race:
+            <br />
+            <br />
             <div class="kyc-index" style="width:100%;">
               <select class="kyc-dropdown" name="kyc-dropdown">
                 <option class="kyc-jumpto" value="jumpto" disabled selected>Jump to race...</option>
@@ -393,10 +436,10 @@
 
         </div>
         <div class="kyc-ticker" data-progress="50%">
-        <ul>
+          <ul>
 
-        </ul>
-      </div>
+          </ul>
+        </div>
       </div>
 
 
@@ -417,6 +460,7 @@
     <script src='https://unpkg.com/intersection-observer'></script>
     <script src='https://unpkg.com/scrollama'></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.12.0/d3.min.js"></script> -->
+
     <!-- JAVASCRIPT POLYFILLS -->
     <script type="text/javascript">
       // .includes
@@ -603,7 +647,7 @@
             var dropdown_entry = $('<option />', {
               'text' : race,
               'value' : race,
-              'class': 'kyc-option-'+data[race]['KYC-QUESTION'][0].gsx$googledivision.$t.replace(/:/g,'_').replace(/\//g,'_'),
+              'class': 'kyc-no-hide-address kyc-no-hide-party kyc-option-'+data[race]['KYC-QUESTION'][0].gsx$googledivision.$t.replace(/:/g,'_').replace(/\//g,'_'),
               // 'disabled': true,
               appendTo : dropdown_category
             });
@@ -620,7 +664,7 @@
       }
 
       // instantiate the scrollama
-      const scroller = scrollama();
+      var scroller = scrollama();
 
       var data = {
         'Federal' : {},
@@ -668,7 +712,7 @@
 
               for (var office in data[level]) {
                 var kyc_office = $('<div />', {
-                  'class' : 'kyc-office',
+                  'class' : 'kyc-office kyc-no-hide-address kyc-no-hide-party',
                   'data-office' : office,
                   html : '<h1>'+office+'</h1>',
                   appendTo : kyc_category
@@ -676,7 +720,7 @@
 
                 for (var party in data[level][office]) {
                   var kyc_party = $('<div />', {
-                    'class' : 'kyc-block kyc-party kyc-'+party.toLowerCase(),
+                    'class' : 'kyc-block kyc-no-hide-address kyc-no-hide-party kyc-party kyc-'+party.toLowerCase(),
                     appendTo : kyc_office
                   });
 
@@ -808,11 +852,9 @@
               }
               scroller.resize();
               }
-            console.log($('.step'));
             scrollama_init();
           }
         })
-
       })
 
       $(window).resize(function() {
@@ -863,35 +905,7 @@
 
       // FILTER BY PARTY
       $('.kyc-header select[name=kyc-party-select]').change(function() {
-
-        FILTER_BY.party = $(this).val();
-
-        $('.kyc-no-hide-party-child:not(.kyc-no-hide-address-child)').parents('.kyc-office').removeClass('kyc-no-hide');
-        $('.kyc-no-hide-party-child').removeClass('kyc-no-hide-party-child');
-        $('.kyc-office:not(.kyc-no-hide)').show();
-        $('.kyc-block').show()
-
-        $('.kyc-dropdown').find('option:not(.kyc-jumpto)').each(function() {
-          this.disabled = false;
-        });
-
-        if (FILTER_BY.party!=='all') {
-
-          $('.kyc-'+FILTER_BY.party).addClass('kyc-no-hide-party-child');
-          $('.kyc-npa').addClass('kyc-no-hide-party-child');
-          $('.kyc-no-hide-party-child').parents('.kyc-office').addClass('kyc-no-hide');
-          $('.kyc-no-hide-party-child').show()
-          hide_offices();
-          $('.kyc-block:not(.kyc-no-hide-party-child)').fadeOut('slow');
-
-          $('.kyc-dropdown').find('option:not(.NPA):not(.'+FILTER_BY.party.toUpperCase()+')').each(function() {
-            this.disabled = true;
-          });
-
-        }
-        if (scroller) {
-          scroller.resize();
-        }
+        fire_party_search($(this).val());
       });
       // JUMP TO RACE ON SELECT CHANGE
       $('.kyc-dropdown').change(function() {
@@ -904,41 +918,130 @@
     </script>
 
     <script type="text/javascript">
-      function show_all_offices() {
+      function filter_offices() {
+        // SHOW EVERYTHING
+        $('.kyc-office').show();
+        $('.kyc-block').show();
+        $('.kyc-dropdown option').each(function() {
+          this.disabled = false;
+        });
+        // $('.kyc-status_party').show();
+        // $('.kyc-status_ballot').show();
 
+        $('.kyc-no-hide').removeClass('kyc-no-hide');
+
+        $('.kyc-no-hide-address').parents('.kyc-office').addClass('kyc-no-hide-address');
+        $('.kyc-no-hide-address').parents('.kyc-block').addClass('kyc-no-hide-address');
+        $('.kyc-no-hide-address.kyc-office').addClass('kyc-no-hide-address');
+        $('.kyc-no-hide-address.kyc-block').addClass('kyc-no-hide-address');
+
+        $('.kyc-no-hide-party').parents('.kyc-office').addClass('kyc-no-hide-party');
+        $('.kyc-no-hide-party').parents('.kyc-block').addClass('kyc-no-hide-party');
+        $('.kyc-no-hide-party.kyc-office').addClass('kyc-no-hide-party');
+        $('.kyc-no-hide-party.kyc-block').addClass('kyc-no-hide-party');
+
+        // HIDE EVERYTHING EXCEPT NO-HIDES
+        $('.kyc-office:not(.kyc-no-hide-address.kyc-no-hide-party)').hide();
+        $('.kyc-block:not(.kyc-no-hide-address.kyc-no-hide-party)').hide();
+        // $('.kyc-status_party:not(.kyc-no-hide)').hide();
+        // $('.kyc-status_ballot:not(.kyc-no-hide)').hide();
+
+        // DISABLE ALL OPTIONS EXCEPT NO-HIDES
+        $('.kyc-dropdown option:not(.kyc-no-hide-address.kyc-no-hide-party)').each(function() {
+          this.disabled = true;
+        });
       }
-      function hide_offices() {
-        $('.kyc-no-hide-address-child').parents('.kyc-office').addClass('kyc-no-hide');
-        $('.kyc-no-hide-party-child').parents('.kyc-office').addClass('kyc-no-hide');
-        $('.kyc-office:not(.kyc-no-hide)').fadeOut('slow');
+      function fire_address_search() {
+        var address = $('#kyc-input_place')[0].value;
+        $.get('https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBjiu-96EDVJ8T0Qpv8iayY028Sm7fO02g&address='+address, function(response) {
+          $('.kyc-no-hide-address').removeClass('kyc-no-hide-address');
+          for (var division in response.divisions) {
+            if (response.divisions.hasOwnProperty(division)) {
+              division_slug = division.replace(/:/g,'_').replace(/\//g,'_');
+              $('.kyc-div_'+division_slug).addClass('kyc-no-hide-address');
+              $('.kyc-option-'+division_slug).addClass('kyc-no-hide-address');
+            }
+          }
+          filter_offices();
+          if (scroller) {
+            scroller.resize();
+          }
+          $('.kyc-status_ballot').show();
+        });
+      }
+      function fire_party_search(party) {
+        FILTER_BY.party = party;
+
+        $('.kyc-no-hide-party').removeClass('kyc-no-hide-party');
+        $('.kyc-npa').addClass('kyc-no-hide-party');
+        $('.kyc-dropdown option.NPA').addClass('kyc-no-hide-party');
+
+        if (FILTER_BY.party!=='all') {
+          $('.kyc-'+FILTER_BY.party).addClass('kyc-no-hide-party');
+          $('.kyc-dropdown option.'+FILTER_BY.party.toUpperCase()).addClass('kyc-no-hide-party');
+        }
+        else {
+          $('.kyc-block').addClass('kyc-no-hide-party');
+          $('.kyc-dropdown option').addClass('kyc-no-hide-party');
+        }
+
+        filter_offices();
+
+        if (scroller) {
+          scroller.resize();
+        }
+        $('.kyc-status_party').hide();
+        $('.kyc-status_party_'+FILTER_BY.party.toUpperCase()).show();
       }
       function initialize() {
         var input = document.getElementById('kyc-input_place');
-        new google.maps.places.Autocomplete(input);
-        console.log('initialized');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        var circle = new google.maps.Circle({
+          center: {
+            lat: 27.960312,
+            lng: -82.452927
+          },
+          radius: 300
+        });
+        autocomplete.setBounds(circle.getBounds());
+        // autocomplete.setComponentRestrictions(
+        //     {'state': ['fl']});
+
+        $('#kyc-input_place').keypress(function(e) {
+          if (e.which == 13) {
+            fire_address_search();
+          }
+        });
 
         $('#kyc-search').click(function() {
-          var address = $('#kyc-input_place')[0].value;
-          $.get('https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyBjiu-96EDVJ8T0Qpv8iayY028Sm7fO02g&address='+address, function(response) {
-            console.log(response.divisions);
-            $('.kyc-can').removeClass('kyc-no-hide');
-            for (var division in response.divisions) {
-              if (response.divisions.hasOwnProperty(division)) {
-                division_slug = division.replace(/:/g,'_').replace(/\//g,'_');
-                $('.kyc-div_'+division_slug).addClass('kyc-no-hide-address-child');
-                $('.kyc-option-'+division_slug).addClass('kyc-option-address-enabled');
-              }
-            }
-            hide_offices();
-            $('.kyc-dropdown option:not(.kyc-option-address-enabled)').each(function() {
-              this.disabled = true;
-            })
-          });
-
+          fire_address_search();
         });
+        $('#kyc-input_place').change(function() {
+          if (this.value.length>0) {
+            $('.kyc-cancel').addClass('active');
+          }
+          else {
+            $('.kyc-cancel').removeClass('active');
+          }
+        })
+        $('.kyc-cancel').click(function() {
+          $('#kyc-input_place').val('');
+          $('.kyc-status_ballot').hide()
+          $('.kyc-block, .kyc-office').addClass('kyc-no-hide-address');
+          filter_offices();
+        });
+
       }
 
-      google.maps.event.addDomListener(window, 'load', initialize);
+      $('body').on('click', '.pac-container, .pac-item', function () {
+        alert('clack');
+      });
+      $('.pac-container, .pac-container *').click(function(){
+        fire_address_search();
+      });
+
+      $(document).ready(function() {initialize(); });
+      // google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
 
